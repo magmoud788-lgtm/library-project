@@ -1,21 +1,23 @@
 let myLibrary = [];
 
-function Book(title, author, pages, id, status) {
+class Book {
+    constructor (title, author, pages, id, status) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.id = id;
     this.status = status;
+    }
+
+    editState() {
+        this.status = this.status === 'read' ? 'not read' : 'read'
+    }
 }
 
 function addBookToLibrary(title, author, pages, status) {
     const book = new Book(title, author, pages, crypto.randomUUID(), status);
-    return myLibrary.push(book);
+     myLibrary.push(book);
 }
-
-    Book.prototype.editState = function() {
-        this.status = !this.status;
-    }
 
 
     const container = document.querySelector('.container');
@@ -35,6 +37,7 @@ function addBookToLibrary(title, author, pages, status) {
         const targetBook = myLibrary.find((book) => {
             return book.id === id2;
         })
+
         targetBook.editState();
         displayBooks();
     }
