@@ -1,0 +1,676 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    padding: 60px 30px;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    color: white;
+
+
+    background:
+        radial-gradient(
+            circle at top,
+            #1e1b4b,
+            #020617 45%
+        );
+
+
+    overflow-x:hidden;
+
+}
+
+
+
+/* =========================
+   FORM CONTAINER
+========================= */
+
+
+#form {
+    position: relative;
+
+    width: min(520px, 100%);
+    margin: 60px auto;
+
+    padding: 40px;
+
+    background: rgba(15,23,42,.8);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 30px;
+
+    backdrop-filter: blur(20px);
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.45);
+}
+
+#form::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+radial-gradient(
+    260px circle at var(--mouse-x) var(--mouse-y),
+    rgba(56,189,248,.18),
+    rgba(139,92,246,.12) 35%,
+    transparent 70%
+);
+
+    opacity: 0;
+
+    transition: opacity .25s;
+
+}
+
+#form:hover::before {
+    opacity: 1;
+}
+
+
+@keyframes float {
+
+
+    0%,100% {
+
+        transform:translateY(0);
+
+    }
+
+
+    50% {
+
+        transform:translateY(-8px);
+
+    }
+
+}
+
+
+
+
+/* animated rainbow border */
+
+
+
+
+
+
+@keyframes borderMove {
+
+
+    from {
+
+        background-position:0%;
+
+    }
+
+
+    to {
+
+        background-position:300%;
+
+    }
+
+}
+
+
+
+
+label {
+
+    display:block;
+
+    margin-top:18px;
+
+    margin-bottom:8px;
+
+
+    color:#cbd5e1;
+
+    font-weight:700;
+
+}
+
+
+
+input,
+select {
+
+
+    width:100%;
+
+
+    padding:16px;
+
+
+    border-radius:18px;
+
+
+    background:#020617;
+
+
+    color:white;
+
+
+    border:
+
+        1px solid
+        #334155;
+
+
+
+    transition:.35s;
+
+}
+
+
+
+
+input:hover,
+select:hover {
+
+
+    border-color:#38bdf8;
+
+
+    box-shadow:
+
+        0 0 25px
+        rgba(56,189,248,.25);
+
+}
+
+
+
+input:focus,
+select:focus {
+
+
+    outline:none;
+
+
+    border-color:#a78bfa;
+
+
+    box-shadow:
+
+        0 0 35px
+        rgba(167,139,250,.45);
+
+
+}
+
+
+
+
+/* =========================
+   BUTTON
+========================= */
+
+
+.submit {
+
+
+    position:relative;
+
+
+    overflow:hidden;
+
+
+    margin-top:30px;
+
+
+    width:100%;
+
+
+    padding:17px;
+
+
+    border:none;
+
+
+    border-radius:20px;
+
+
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #06b6d4,
+            #8b5cf6
+        );
+
+
+
+    color:white;
+
+
+    font-size:1rem;
+
+
+    font-weight:900;
+
+
+    cursor:pointer;
+
+
+
+    transition:.4s;
+
+}
+
+
+
+.submit::after {
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    top:0;
+
+
+    left:-100%;
+
+
+    width:100%;
+
+
+    height:100%;
+
+
+    background:
+
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.5),
+            transparent
+        );
+
+
+    transition:.6s;
+
+}
+
+
+
+.submit:hover::after {
+
+
+    left:100%;
+
+}
+
+
+
+.submit:hover {
+
+
+    transform:
+
+        translateY(-5px);
+
+
+    box-shadow:
+
+        0 20px 50px
+        rgba(139,92,246,.5);
+
+}
+
+
+
+
+/* =========================
+   BOOK GRID
+========================= */
+
+
+.container {
+
+
+    width:min(1200px,100%);
+
+
+    margin:80px auto;
+
+
+    display:grid;
+
+
+    grid-template-columns:
+
+    repeat(
+        auto-fit,
+        minmax(300px,1fr)
+    );
+
+
+    gap:35px;
+
+
+}
+
+
+
+/* =========================
+   BOOK CARD
+========================= */
+
+
+.book-card {
+
+
+    position:relative;
+
+
+    padding:35px;
+
+
+    border-radius:30px;
+
+
+    background:
+
+        rgba(15,23,42,.7);
+
+
+
+    backdrop-filter:
+
+        blur(20px);
+
+
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.08);
+
+
+
+    overflow:hidden;
+
+
+    transition:
+
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s;
+
+
+}
+
+
+
+
+/* moving glow */
+
+
+.book-card::before {
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    width:200%;
+
+
+    height:200%;
+
+
+    top:-50%;
+
+
+    left:-50%;
+
+
+
+    background:
+
+        conic-gradient(
+            transparent,
+            #38bdf8,
+            transparent,
+            #a855f7,
+            transparent
+        );
+
+
+
+    animation:
+
+        spin 5s linear infinite;
+
+
+    opacity:0;
+
+
+    transition:.4s;
+
+
+}
+
+
+
+.book-card:hover::before {
+
+
+    opacity:1;
+
+
+}
+
+
+
+@keyframes spin {
+
+
+    from {
+
+        transform:rotate(0deg);
+
+    }
+
+
+    to {
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+
+
+/* inner layer */
+
+
+.book-card::after {
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    inset:2px;
+
+
+    background:#020617;
+
+
+    border-radius:28px;
+
+
+    z-index:0;
+
+
+}
+
+
+
+.book-card > * {
+
+
+    position:relative;
+
+
+    z-index:1;
+
+
+}
+
+
+
+
+.book-card:hover {
+
+
+    transform:
+
+        translateY(-15px)
+        rotateX(5deg);
+
+
+
+    box-shadow:
+
+
+        0 30px 100px
+        rgba(56,189,248,.35);
+
+}
+
+
+
+
+
+.book-card h3 {
+
+
+    font-size:1.7rem;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.book-card p {
+
+
+    margin:12px 0;
+
+    color:#94a3b8;
+
+}
+
+
+
+
+.book-card button {
+
+
+    margin-top:25px;
+
+    margin-right:10px;
+
+
+    padding:12px 18px;
+
+
+    border-radius:15px;
+
+
+    border:none;
+
+
+    cursor:pointer;
+
+
+    font-weight:800;
+
+
+    transition:.3s;
+
+}
+
+
+
+.book-card button:hover {
+
+
+    transform:
+
+        translateY(-5px)
+        scale(1.05);
+
+}
+
+
+
+.remove-button {
+
+
+    background:#ef4444;
+
+    color:white;
+
+}
+
+
+
+.toggle-button {
+
+
+    background:#22c55e;
+
+    color:white;
+
+}
+
+
+
+.error {
+
+    color:#fb7185;
+
+    font-size:.85rem;
+
+}

@@ -47,7 +47,6 @@ function displayBooks() {
     container.innerHTML = '';
     for(let book of myLibrary) { 
 
-const card = document.createElement('div');
 
 const toggleBtn = document.createElement('button');
 toggleBtn.dataset.id = book.id;
@@ -66,6 +65,8 @@ remBtn.classList.add('remove-button');
         console.log(book.id);
         console.log(book.status);
 
+        const card = document.createElement('div');
+card.classList.add('book-card');
         const h3 = document.createElement('h3');
         h3.textContent = book.title;
 
@@ -82,35 +83,185 @@ remBtn.classList.add('remove-button');
         p4.textContent = book.status;
 
   
-     container.appendChild(h3);
-     container.appendChild(p);
-     container.appendChild(p2);
-     container.appendChild(p3);
-     container.appendChild(p4) ;   
-     container.appendChild(remBtn);
-     container.appendChild(toggleBtn);
+     card.appendChild(h3);
+     card.appendChild(p);
+     card.appendChild(p2);
+     card.appendChild(p3);
+     card.appendChild(p4) ;   
+     card.appendChild(remBtn);
+     card.appendChild(toggleBtn);
+
+     container.appendChild(card);
     }}
 
     const title = document.querySelector('#title');
+    const titleError = document.querySelector('#title + span.error')
     const author = document.querySelector('#author');
+    const authorError = document.querySelector('#author + span.error');
     const pages = document.querySelector('#pages');
+    const pagesError = document.querySelector('#pages + span.error');
     const state = document.querySelector('#state'); 
+    const stateError = document.querySelector('#state + span.error');
     const btnForm = document.querySelector('#form');
-    const card = document.querySelector('.card');
 
-  
-    btnForm.addEventListener('submit', (event) => {
-        event.preventDefault();
+
+    title.addEventListener('input', () => {
+    if(title.validity.valid) {
+        titleError.textContent = '';
+        return true;
+    } else {
+        showError();
+        return false;
+    }
+});
+    function titleValidation() {
+        if(title.validity.valid) {
+            titleError.textContent = '';
+            return true;
+        } else {
+            showError();
+            return false;
+        }
+        };
+
+function showError() {
+    if(title.validity.valueMissing) {
+        titleError.textContent = 'hmm...hmm could you add a title pls';
+    }
+};
+
+author.addEventListener('input', () =>  {
+    if(author.validity.valid) {
+        authorError.textContent = '';
+        return true;
+    } else {
+        showAuthorError();
+        return false
+    }
+});
+
+function authorValidation() {
+    if(author.validity.valid) {
+        authorError.textContent = '';
+        return true;
+    } else {
+        showAuthorError();
+        return false
+    }
+};
+
+function showAuthorError() {
+    if(author.validity.valueMissing) {
+        authorError.textContent = 'bro come one pls put author name or you didnt open a book in your life';
+    }
+};
+
+
+pages.addEventListener('input', () => {
+    if(pages.validity.valid) {
+        pagesError.textContent = '';
+    } else {
+        showPagesError();
+    }
+});
+
+function pagesValidation() {
+    if(pages.validity.valid) {
+        pagesError.textContent = '';
+        return true;
+    } else {
+        showPagesError();
+        return false;
+    }
+};
+
+function showPagesError() {
+    if(pages.validity.valueMissing) {
+        pagesError.textContent = 'pls fill in a number plsssss';
+        return false;
+    }
+    else if(pages.validity.badInput) {
+        pagesError.textContent = 'could you type a number its called number';
+        return false;
+    } 
+    else if(pages.validity.rangeUnderflow) {
+        pagesError.textContent = 'could you type pages from 20 and more';
+        return false;
+    }
+};
+
+
+
+state.addEventListener('change', () => {
+    if(state.validity.valid) {
+        stateError.textContent = '';
+    } else {
+        showStateError();
+    }
+});
+
+function stateValidation() {
+
+    if(state.validity.valid) {
+        stateError.textContent = '';
+        return true;
+    } else {
+        showStateError();
+        return false;
+    }
+};
+
+function showStateError() {
+    if(state.validity.valueMissing) {
+        stateError.textContent = 'pls state did you read the book or not i dont think so'
+    }
+};
+
+const form = document.querySelector("#form");
+
+form.addEventListener("mousemove", (e) => {
+
+    const rect = form.getBoundingClientRect();
+
+    form.style.setProperty(
+        "--mouse-x",
+        `${e.clientX - rect.left}px`
+    );
+
+    form.style.setProperty(
+        "--mouse-y",
+        `${e.clientY - rect.top}px`
+    );
+
+});
+
+btnForm.addEventListener('submit', (event) => {
+event.preventDefault();
+        const titleValid = titleValidation();
+        const authorValid = authorValidation();
+        const pagesValid = pagesValidation();
+        const stateValid = stateValidation();
+        if(!titleValid || !authorValid || !pagesValid || !stateValid) {
+            
+            return;
+        } 
         const titlevalue = title.value;
         const authorvalue = author.value;
         const  pagesvalue = pages.value;
         const statevalue = state.value;
-        
-        addBookToLibrary(titlevalue, authorvalue, pagesvalue, statevalue);
-        btnForm.reset();
-  container.innerHTML = '';
-    displayBooks();
 
+        addBookToLibrary(
+            titlevalue,
+            authorvalue,
+            pagesvalue,
+            statevalue);
+
+        btnForm.reset();
+
+  container.innerHTML = '';
+  
+    displayBooks();
+        
  })
 
 addBookToLibrary('The Hobbit', 'Tolkien', 300, 'read');

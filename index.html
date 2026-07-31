@@ -9,19 +9,31 @@
 </head>
 <body>
     
-<form id="form">
+<form id="form" novalidate>
+    <div class="container-of-title">
     <label for="title">Title</label> 
-    <input type="text" id="title" name="header">
-  
+    <input type="text" id="title" name="header" required>
+    <span class='error'></span>
+</div>
+    <div class="container-of-author">
     <label for="author">author</label>
-    <input type="text" id="author" name="publisher">
-
+    <input type="text" id="author" name="publisher" required>
+    <span class="error"></span>
+</div>
+    <div class="container-of-pages">
     <label for="pages">number of pages</label>
-    <input type="text" id="pages" name="num-of-pages">
-
+    <input type="number" id="pages" name="num-of-pages" min="20" required>
+    <span class="error"></span>
+</div>
+    <div class="container-of-state">
     <label for="state">status</label>
-    <input type="text" id="state" name="status">
-
+    <select id="state" required>
+    <option value="">Choose status</option>
+    <option value="read">Read</option>
+    <option value="not read">Not read</option>
+</select>
+<span class="error"></span>
+</div>
     <button class="submit">submit</button>   
 </form> 
 <div class="container">
